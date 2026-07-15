@@ -214,9 +214,30 @@ const Icon: React.FC<IconProps> = ({ name, className = '', solid = false, ...pro
   const hasWidthClass = /\b(w-\d+|w-\[.*?\]|w-auto|w-full|w-screen|w-min|w-max|w-fit|size-\d+|size-\[.*?\])\b/.test(finalClass);
 
   if (customSvg) {
+    const customStyle = solid 
+      ? {
+          '--custom-svg-fill': 'currentColor',
+          '--custom-svg-fill-opacity': '0.15',
+          '--custom-svg-stroke': 'currentColor',
+        } as React.CSSProperties
+      : {
+          '--custom-svg-fill': 'none',
+          '--custom-svg-fill-opacity': '0',
+          '--custom-svg-stroke': 'currentColor',
+        } as React.CSSProperties;
+
     return (
       <span 
-        className={`inline-flex shrink-0 items-center justify-center [&>svg]:w-full [&>svg]:h-full ${hasWidthClass ? '' : 'w-[1em] h-[1em]'} ${finalClass}`}
+        className={`inline-flex shrink-0 items-center justify-center [&>svg]:w-full [&>svg]:h-full 
+          [&_path]:fill-[var(--custom-svg-fill)] [&_path]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_path]:stroke-[var(--custom-svg-stroke)]
+          [&_rect]:fill-[var(--custom-svg-fill)] [&_rect]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_rect]:stroke-[var(--custom-svg-stroke)]
+          [&_circle]:fill-[var(--custom-svg-fill)] [&_circle]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_circle]:stroke-[var(--custom-svg-stroke)]
+          [&_polygon]:fill-[var(--custom-svg-fill)] [&_polygon]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_polygon]:stroke-[var(--custom-svg-stroke)]
+          [&_ellipse]:fill-[var(--custom-svg-fill)] [&_ellipse]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_ellipse]:stroke-[var(--custom-svg-stroke)]
+          [&_polyline]:fill-[var(--custom-svg-fill)] [&_polyline]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_polyline]:stroke-[var(--custom-svg-stroke)]
+          [&_line]:fill-[var(--custom-svg-fill)] [&_line]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_line]:stroke-[var(--custom-svg-stroke)]
+          ${hasWidthClass ? '' : 'w-[1em] h-[1em]'} ${finalClass}`}
+        style={customStyle}
         dangerouslySetInnerHTML={{ __html: customSvg }}
         {...props}
       />

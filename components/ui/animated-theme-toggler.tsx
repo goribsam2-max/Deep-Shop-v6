@@ -25,7 +25,7 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
   }, []);
 
   return (
-    <div className={cn("relative flex items-center justify-center", className)} ref={containerRef}>
+    <div className={cn("relative inline-flex items-center justify-center", className)} ref={containerRef}>
       <button
         onClick={() => {
           triggerHaptic();
@@ -37,27 +37,27 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
       >
         <AnimatePresence mode="wait" initial={false}>
           {isDark ? (
-            <motion.span
+            <motion.div
               key="sun-icon"
               initial={{ opacity: 0, scale: 0.55, rotate: 25 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.33 }}
-              className="text-white"
+              className="w-full h-full flex items-center justify-center"
             >
               <Icon name="sun" className="w-5 h-5" />
-            </motion.span>
+            </motion.div>
           ) : (
-            <motion.span
+            <motion.div
               key="moon-icon"
               initial={{ opacity: 0, scale: 0.55, rotate: -25 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.33 }}
-              className="text-black"
+              className="w-full h-full flex items-center justify-center"
             >
               <Icon name="moon" className="w-5 h-5" />
-            </motion.span>
+            </motion.div>
           )}
         </AnimatePresence>
       </button>

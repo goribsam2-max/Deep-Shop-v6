@@ -391,7 +391,7 @@ export function Header() {
             className={cn("relative", buttonClass)}
             aria-label="Shopping Cart"
           >
-            <ShoppingCart className="w-5 h-5" />
+            <Icon name="shopping-cart" className="w-5 h-5" />
             {cartCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-[#1cdb5e] text-white text-[10px] font-black w-4.5 h-4.5 flex items-center justify-center rounded-full border border-white dark:border-zinc-800 shadow-sm">
                 {cartCount}
@@ -410,7 +410,7 @@ export function Header() {
               className="relative rounded-full shadow-none border-none bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 w-9 h-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
               aria-label="Messages"
             >
-              <MessageSquare className="w-5 h-5" />
+              <Icon name="message-square" className="w-5 h-5" />
               {unreadMessagesCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4.5 h-4.5 flex items-center justify-center rounded-full border border-white dark:border-zinc-900 shadow-sm animate-bounce">
                   {unreadMessagesCount}
@@ -447,7 +447,7 @@ export function Header() {
               className="relative rounded-full shadow-none border-none bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 w-9 h-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
               aria-label="Shopping Cart"
             >
-              <ShoppingCart className="w-5 h-5" strokeWidth={2.2} />
+              <Icon name="shopping-cart" className="w-5 h-5" />
               {cartCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 bg-[#1cdb5e] text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full border border-white dark:border-zinc-900 shadow-sm">
                   {cartCount}
@@ -464,7 +464,7 @@ export function Header() {
               className="relative rounded-full shadow-none border-none bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 w-9 h-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white flex"
               aria-label="Messages"
             >
-              <MessageSquare className="w-5 h-5" />
+              <Icon name="message-square" className="w-5 h-5" />
               {unreadMessagesCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4.5 h-4.5 flex items-center justify-center rounded-full border border-white dark:border-zinc-900 shadow-sm animate-bounce">
                   {unreadMessagesCount}

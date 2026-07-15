@@ -34,6 +34,9 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "info-circle", name: "Info Circle Badge", description: "Information popups and status guidelines", category: "navigation" },
   { key: "plus", name: "Plus Sign", description: "Generic add / increase quantity buttons", category: "navigation" },
   { key: "minus", name: "Minus Sign", description: "Generic remove / decrease quantity buttons", category: "navigation" },
+  { key: "sun", name: "Light Mode (Sun)", description: "Sun icon used for Light Mode controls and indicators", category: "navigation" },
+  { key: "moon", name: "Dark Mode (Moon)", description: "Moon icon used for Dark Mode controls and indicators", category: "navigation" },
+  { key: "monitor", name: "System Mode (Monitor)", description: "Monitor icon used for System Theme controls and indicators", category: "navigation" },
 
   // Profile & User Management
   { key: "user", name: "User Account Profile", description: "Bottom profiles tab and user accounts panel", category: "profile" },

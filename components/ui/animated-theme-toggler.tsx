@@ -25,14 +25,14 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
   }, []);
 
   return (
-    <div className={cn("relative", className)} ref={containerRef}>
+    <div className={cn("relative flex items-center justify-center", className)} ref={containerRef}>
       <button
         onClick={() => {
           triggerHaptic();
           setIsOpen(!isOpen);
         }}
         aria-label="Switch theme"
-        className="flex items-center justify-center p-2 rounded-full outline-none focus:outline-none active:outline-none focus:ring-0 cursor-pointer"
+        className="w-full h-full flex items-center justify-center rounded-full outline-none focus:outline-none active:outline-none focus:ring-0 cursor-pointer"
         type="button"
       >
         <AnimatePresence mode="wait" initial={false}>

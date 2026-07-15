@@ -248,7 +248,7 @@ const BottomMenu = () => {
                   : "text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800"
               }`}
             >
-              <Icon name="sun" className="w-[18px] h-[18px]" />
+              <Icon name="moon" className="w-[18px] h-[18px]" />
               <span>Dark</span>
             </button>
           </div>

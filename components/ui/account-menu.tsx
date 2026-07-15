@@ -86,7 +86,9 @@ export default function AccountMenu({
           <span className="hidden md:inline-block max-w-[80px] lg:max-w-[120px] truncate text-sm">
             {user ? displayName : "Sign in"}
           </span>
-          <Icon name="chevron-down" className="hidden md:block w-4 h-4 opacity-50 shrink-0" />
+          <span className="hidden md:inline-flex items-center">
+            <Icon name="chevron-down" className="w-4 h-4 opacity-50 shrink-0" />
+          </span>
         </Button>
       </DropdownMenuTrigger>
 

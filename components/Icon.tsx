@@ -164,6 +164,22 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 
 let customIconsCache: Record<string, string> = {};
+try {
+  const cached = localStorage.getItem('custom_icons_cache');
+  if (cached) {
+    const parsed = JSON.parse(cached);
+    const cleaned: Record<string, string> = {};
+    Object.keys(parsed).forEach(k => {
+      if (typeof parsed[k] === 'string' && k !== 'icons') {
+        cleaned[k.toLowerCase()] = parsed[k];
+      }
+    });
+    customIconsCache = cleaned;
+  }
+} catch (e) {
+  console.warn("Failed to read custom icons cache from localStorage", e);
+}
+
 const listeners = new Set<() => void>();
 let isListening = false;
 
@@ -174,9 +190,24 @@ function initCustomIconsListener() {
     onSnapshot(doc(db, 'settings', 'custom_icons'), (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        customIconsCache = (data?.icons || data || {}) as Record<string, string>;
+        const rawIcons = data?.icons || data || {};
+        const cleaned: Record<string, string> = {};
+        Object.keys(rawIcons).forEach(k => {
+          if (typeof rawIcons[k] === 'string' && k !== 'icons') {
+            cleaned[k.toLowerCase()] = rawIcons[k];
+          }
+        });
+        customIconsCache = cleaned;
+        try {
+          localStorage.setItem('custom_icons_cache', JSON.stringify(customIconsCache));
+        } catch (e) {
+          console.warn("Failed to write custom icons cache to localStorage", e);
+        }
       } else {
         customIconsCache = {};
+        try {
+          localStorage.removeItem('custom_icons_cache');
+        } catch (e) {}
       }
       listeners.forEach(l => l());
     }, (err) => {
@@ -191,7 +222,13 @@ const Icon: React.FC<IconProps> = ({ name, className = '', solid = false, ...pro
   const pascalName = (customIconMapping[name] || formatNameToPascal(name)) as keyof typeof LucideIcons;
   const LucideIcon = LucideIcons[pascalName] as React.FC<any> | undefined;
 
-  const [customSvg, setCustomSvg] = useState<string | null>(null);
+  const [customSvg, setCustomSvg] = useState<string | null>(() => {
+    const key = name.toLowerCase();
+    const mappedKey = pascalName ? String(pascalName).toLowerCase() : '';
+    return customIconsCache[key] || customIconsCache[mappedKey] || customIconsCache[name] || null;
+  });
+
+  const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
 
   useEffect(() => {
     initCustomIconsListener();
@@ -214,33 +251,32 @@ const Icon: React.FC<IconProps> = ({ name, className = '', solid = false, ...pro
   const hasWidthClass = /\b(w-\d+|w-\[.*?\]|w-auto|w-full|w-screen|w-min|w-max|w-fit|size-\d+|size-\[.*?\])\b/.test(finalClass);
 
   if (customSvg) {
-    const customStyle = solid 
-      ? {
-          '--custom-svg-fill': 'currentColor',
-          '--custom-svg-fill-opacity': '0.15',
-          '--custom-svg-stroke': 'currentColor',
-        } as React.CSSProperties
-      : {
-          '--custom-svg-fill': 'none',
-          '--custom-svg-fill-opacity': '0',
-          '--custom-svg-stroke': 'currentColor',
-        } as React.CSSProperties;
-
     return (
       <span 
-        className={`inline-flex shrink-0 items-center justify-center [&>svg]:w-full [&>svg]:h-full 
-          [&_path]:fill-[var(--custom-svg-fill)] [&_path]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_path]:stroke-[var(--custom-svg-stroke)]
-          [&_rect]:fill-[var(--custom-svg-fill)] [&_rect]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_rect]:stroke-[var(--custom-svg-stroke)]
-          [&_circle]:fill-[var(--custom-svg-fill)] [&_circle]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_circle]:stroke-[var(--custom-svg-stroke)]
-          [&_polygon]:fill-[var(--custom-svg-fill)] [&_polygon]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_polygon]:stroke-[var(--custom-svg-stroke)]
-          [&_ellipse]:fill-[var(--custom-svg-fill)] [&_ellipse]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_ellipse]:stroke-[var(--custom-svg-stroke)]
-          [&_polyline]:fill-[var(--custom-svg-fill)] [&_polyline]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_polyline]:stroke-[var(--custom-svg-stroke)]
-          [&_line]:fill-[var(--custom-svg-fill)] [&_line]:fill-opacity-[var(--custom-svg-fill-opacity)] [&_line]:stroke-[var(--custom-svg-stroke)]
-          ${hasWidthClass ? '' : 'w-[1em] h-[1em]'} ${finalClass}`}
-        style={customStyle}
-        dangerouslySetInnerHTML={{ __html: customSvg }}
+        className={`custom-icon-container-${cleanName} inline-flex shrink-0 items-center justify-center ${hasWidthClass ? '' : 'w-[1em] h-[1em]'} ${finalClass}`}
         {...props}
-      />
+      >
+        <style dangerouslySetInnerHTML={{ __html: `
+          .custom-icon-container-${cleanName} svg, 
+          .custom-icon-container-${cleanName} path, 
+          .custom-icon-container-${cleanName} rect, 
+          .custom-icon-container-${cleanName} circle, 
+          .custom-icon-container-${cleanName} polygon, 
+          .custom-icon-container-${cleanName} ellipse, 
+          .custom-icon-container-${cleanName} polyline, 
+          .custom-icon-container-${cleanName} line {
+            fill: ${solid ? 'rgba(28, 219, 94, 0.15) !important' : 'none !important'};
+            fill-opacity: ${solid ? '1 !important' : '0 !important'};
+            stroke: ${solid ? '#1cdb5e !important' : 'currentColor !important'};
+            stroke-width: ${solid ? '2.5px !important' : '2px !important'};
+            transition: fill 0.3s ease, fill-opacity 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease;
+          }
+        `}} />
+        <div 
+          className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
+          dangerouslySetInnerHTML={{ __html: customSvg }} 
+        />
+      </span>
     );
   }
 

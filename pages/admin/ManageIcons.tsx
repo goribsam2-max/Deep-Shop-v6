@@ -141,7 +141,13 @@ const ManageIcons: React.FC = () => {
         const snap = await getDoc(doc(db, "settings", "custom_icons"));
         if (snap.exists()) {
           const data = snap.data();
-          const iconsData = (data?.icons || data || {}) as Record<string, string>;
+          const rawIcons = data?.icons || data || {};
+          const iconsData: Record<string, string> = {};
+          Object.keys(rawIcons).forEach((key) => {
+            if (typeof rawIcons[key] === "string" && key !== "icons") {
+              iconsData[key.toLowerCase()] = rawIcons[key];
+            }
+          });
           setCustomIcons(iconsData);
           setInputs(iconsData);
 
@@ -249,7 +255,10 @@ const ManageIcons: React.FC = () => {
         delete updatedIcons[key];
       }
 
-      await setDoc(doc(db, "settings", "custom_icons"), { icons: updatedIcons }, { merge: true });
+      await setDoc(doc(db, "settings", "custom_icons"), { icons: updatedIcons });
+      try {
+        localStorage.setItem("custom_icons_cache", JSON.stringify(updatedIcons));
+      } catch (e) {}
       
       setCustomIcons(updatedIcons);
       setInputs((prev) => ({ ...prev, [key]: code }));
@@ -269,7 +278,10 @@ const ManageIcons: React.FC = () => {
       const updatedIcons = { ...customIcons };
       delete updatedIcons[key];
 
-      await setDoc(doc(db, "settings", "custom_icons"), { icons: updatedIcons }, { merge: true });
+      await setDoc(doc(db, "settings", "custom_icons"), { icons: updatedIcons });
+      try {
+        localStorage.setItem("custom_icons_cache", JSON.stringify(updatedIcons));
+      } catch (e) {}
       
       setCustomIcons(updatedIcons);
       setInputs((prev) => {
@@ -297,7 +309,10 @@ const ManageIcons: React.FC = () => {
     
     setLoading(true);
     try {
-      await setDoc(doc(db, "settings", "custom_icons"), { icons: {} }, { merge: true });
+      await setDoc(doc(db, "settings", "custom_icons"), { icons: {} });
+      try {
+        localStorage.removeItem("custom_icons_cache");
+      } catch (e) {}
       setCustomIcons({});
       setInputs({});
       setDynamicKeys([]);

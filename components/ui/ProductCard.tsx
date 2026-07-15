@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { Product } from "../../types";
-import { Heart, ShoppingBag, Star } from "lucide-react";
+import Icon from "../Icon";
 import { auth, db } from "../../firebase";
 import { doc, setDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { PixelImage } from "./PixelImage";
@@ -129,8 +129,10 @@ export const ProductCard = ({ product, index }: { product: Product, index?: numb
             onClick={toggleWishlist}
             className="absolute top-2.5 left-2.5 sm:left-auto sm:right-2.5 bg-white/70 backdrop-blur-sm dark:bg-zinc-900/70 rounded-full p-2 flex items-center justify-center transition-colors hover:bg-orange-50 dark:hover:bg-zinc-800 z-10 cursor-pointer shadow-sm"
           >
-            <Heart
-              className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${isWishlisted ? "text-[#ea580c] fill-[#ea580c]" : "text-[#ea580c] fill-none"}`}
+            <Icon
+              name="heart"
+              solid={isWishlisted}
+              className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${isWishlisted ? "text-[#ea580c]" : "text-[#ea580c]"}`}
             />
           </button>
 
@@ -183,7 +185,7 @@ export const ProductCard = ({ product, index }: { product: Product, index?: numb
             {product.name}
           </h3>
           <div className="flex items-center gap-1 mt-1.5 mb-2">
-            <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+            <Icon name="star" solid={true} className="w-3 h-3 text-yellow-400" />
             <span className="text-[10px] sm:text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
               {product.rating ? product.rating.toFixed(1) : "4.9"}
             </span>

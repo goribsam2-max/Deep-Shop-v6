@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { Moon, Sun, Monitor } from "lucide-react"
+import Icon from "../Icon"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { useTheme } from "../ThemeContext"
@@ -45,7 +45,7 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
               transition={{ duration: 0.33 }}
               className="text-white"
             >
-              <Sun className="w-5 h-5" />
+              <Icon name="sun" className="w-5 h-5" />
             </motion.span>
           ) : (
             <motion.span
@@ -56,7 +56,7 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
               transition={{ duration: 0.33 }}
               className="text-black"
             >
-              <Moon className="w-5 h-5" />
+              <Icon name="moon" className="w-5 h-5" />
             </motion.span>
           )}
         </AnimatePresence>
@@ -72,9 +72,9 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
             className="absolute right-0 top-full mt-2 w-36 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl overflow-hidden z-50 p-1"
           >
             {[
-              { id: 'light', label: 'Light', icon: Sun },
-              { id: 'dark', label: 'Dark', icon: Moon },
-              { id: 'system', label: 'System', icon: Monitor },
+              { id: 'light', label: 'Light', iconKey: 'sun' },
+              { id: 'dark', label: 'Dark', iconKey: 'moon' },
+              { id: 'system', label: 'System', iconKey: 'monitor' },
             ].map((item) => (
               <button
                 key={item.id}
@@ -90,7 +90,7 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
                     : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-white"
                 )}
               >
-                <item.icon className="w-4 h-4" />
+                <Icon name={item.iconKey} className="w-4 h-4" />
                 {item.label}
               </button>
             ))}

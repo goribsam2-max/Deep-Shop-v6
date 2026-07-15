@@ -18,6 +18,7 @@ import { uploadToImgbb } from "../../services/imgbb";
 import { useNotify, useConfirm } from "../../components/Notifications";
 import { formatPrice } from "../../lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import Icon from "../../components/Icon";
 import {
   Plus, Edit, Trash2, Package, Eye, ShoppingBag, TrendingUp, Music,
   Store, Camera, ShieldCheck, Check, DollarSign, ListPlus, Loader2,
@@ -634,7 +635,7 @@ const SellerDashboard: React.FC = () => {
     return "text-zinc-800 dark:text-zinc-200";
   };
 
-  const NavItem = ({ icon: Icon, label, tab, badge }: any) => {
+  const NavItem = ({ icon, label, tab, badge }: { icon: string, label: string, tab: any, badge?: number }) => {
     const isActive = activeTab === tab || activeTab.startsWith(tab);
     return (
       <button
@@ -647,8 +648,9 @@ const SellerDashboard: React.FC = () => {
         <div className="relative flex flex-col items-center justify-center">
           <div className="relative">
             <Icon 
+              name={icon}
               className={`w-5.5 h-5.5 mb-1 transition-all duration-300 ${isActive ? "text-[#EF8020] scale-110" : "text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-300"}`} 
-              strokeWidth={isActive ? 2.5 : 2} 
+              solid={isActive}
             />
             {badge !== undefined && badge > 0 && (
               <span className="absolute -top-1.5 -right-2 bg-orange-500 text-white text-[9px] font-bold px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center leading-none">
@@ -1480,10 +1482,10 @@ const SellerDashboard: React.FC = () => {
 
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800 dark:border-zinc-800 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.03)] z-50 px-6 py-2 pb-safe flex justify-between items-center">
-        <NavItem icon={LayoutDashboard} label="Home" tab="home" />
-        <NavItem icon={ClipboardList} label="Orders" tab="orders" badge={orders.filter((o: any) => o.status === "pending").length} />
-        <NavItem icon={Boxes} label="Products" tab="products" />
-        <NavItem icon={Sliders} label="Settings" tab="settings_store" />
+        <NavItem icon="chart-line" label="Home" tab="home" />
+        <NavItem icon="receipt" label="Orders" tab="orders" badge={orders.filter((o: any) => o.status === "pending").length} />
+        <NavItem icon="boxes" label="Products" tab="products" />
+        <NavItem icon="sliders-h" label="Settings" tab="settings_store" />
       </div>
       
       {/* Safe area spacing for mobile browsers */}

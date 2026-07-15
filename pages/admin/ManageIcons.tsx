@@ -234,6 +234,13 @@ const ManageIcons: React.FC = () => {
       }
 
       if (autoConvertColors) {
+        // Strip strict width & height parameters to support fluid resizing
+        code = code.replace(/\bwidth="[^"]*"/g, "");
+        code = code.replace(/\bheight="[^"]*"/g, "");
+        // Strip inline style attributes which override CSS classes
+        code = code.replace(/\bstyle="[^"]*"/g, "");
+        // Strip nested style blocks
+        code = code.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, "");
         // Remap stroke to currentColor
         code = code.replace(/stroke="[^"]*"/g, 'stroke="currentColor"');
         // Remap solid fills to currentColor, while maintaining fill="none"
@@ -241,9 +248,6 @@ const ManageIcons: React.FC = () => {
           if (match.includes("none")) return match;
           return 'fill="currentColor"';
         });
-        // Strip strict width & height parameters to support fluid resizing
-        code = code.replace(/\bwidth="[^"]*"/g, "");
-        code = code.replace(/\bheight="[^"]*"/g, "");
       }
     }
 

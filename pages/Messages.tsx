@@ -13,6 +13,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc, onSnapshot, updateDoc, arrayUnion, arrayRemove, collection, addDoc, getDoc, query, where, orderBy, serverTimestamp, getDocs, limit, deleteDoc, writeBatch } from 'firebase/firestore';
 import { cn, formatDisplayEmail } from '../lib/utils';
 import VoiceMessageBubble from '../components/ui/voice-message-bubble';
+import Icon from '../components/Icon';
 
 const formatDateSeparator = (timestamp: any) => {
     if (!timestamp) return '';
@@ -2759,7 +2760,7 @@ const handleCreateChannel = async () => {
                   )}
                   title="Chats"
               >
-                  <MessageCircle className="w-5 h-5" />
+                  <Icon name="message-circle" className="w-5 h-5" solid={activeMessagesTab === 'chats'} />
                   {activeMessagesTab === 'chats' && (
                       <div className="absolute left-0 top-3 bottom-3 w-1 bg-indigo-600 dark:bg-indigo-400 rounded-r-full" />
                   )}
@@ -2776,7 +2777,7 @@ const handleCreateChannel = async () => {
                   )}
                   title="Settings"
               >
-                  <Settings className="w-5 h-5" />
+                  <Icon name="settings" className="w-5 h-5" solid={activeMessagesTab === 'settings'} />
                   {activeMessagesTab === 'settings' && (
                       <div className="absolute left-0 top-3 bottom-3 w-1 bg-indigo-600 dark:bg-indigo-400 rounded-r-full" />
                   )}
@@ -3531,7 +3532,7 @@ const handleCreateChannel = async () => {
 							: "text-zinc-400 hover:text-zinc-600 dark:hover:text-[#EF8020]/60 hover:bg-zinc-500/5"
 					)}
 				>
-					<MessageCircle className="w-5 h-5 transition-transform duration-200" style={{ transform: activeMessagesTab === 'chats' ? 'scale(1.1)' : 'scale(1)' }} />
+					<Icon name="message-circle" className="w-5 h-5 transition-transform duration-200" solid={activeMessagesTab === 'chats'} style={{ transform: activeMessagesTab === 'chats' ? 'scale(1.1)' : 'scale(1)' }} />
 					<span className="text-[10px] font-bold tracking-wider">Chats</span>
 					{activeMessagesTab === 'chats' && (
 						<span className="absolute bottom-1 w-1.5 h-1.5 rounded-full bg-[#EF8020] animate-pulse shadow-sm" />
@@ -3546,7 +3547,7 @@ const handleCreateChannel = async () => {
 							: "text-zinc-400 hover:text-zinc-600 dark:hover:text-[#EF8020]/60 hover:bg-zinc-500/5"
 					)}
 				>
-					<Settings className="w-5 h-5 transition-transform duration-200" style={{ transform: activeMessagesTab === 'settings' ? 'scale(1.1)' : 'scale(1)' }} />
+					<Icon name="settings" className="w-5 h-5 transition-transform duration-200" solid={activeMessagesTab === 'settings'} style={{ transform: activeMessagesTab === 'settings' ? 'scale(1.1)' : 'scale(1)' }} />
 					<span className="text-[10px] font-bold tracking-wider">Settings</span>
 					{activeMessagesTab === 'settings' && (
 						<span className="absolute bottom-1 w-1.5 h-1.5 rounded-full bg-[#EF8020] animate-pulse shadow-sm" />

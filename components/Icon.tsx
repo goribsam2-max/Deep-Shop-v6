@@ -188,6 +188,11 @@ function initCustomIconsListener() {
   isListening = true;
   try {
     onSnapshot(doc(db, 'settings', 'custom_icons'), (snap) => {
+      // If the snapshot is from the local Firestore cache and we already have cached icons,
+      // ignore it to prevent flickering to stale/old cached icons on page load.
+      if (snap.metadata.fromCache && Object.keys(customIconsCache).length > 0) {
+        return;
+      }
       if (snap.exists()) {
         const data = snap.data();
         const rawIcons = data?.icons || data || {};
@@ -251,24 +256,19 @@ const Icon: React.FC<IconProps> = ({ name, className = '', solid = false, ...pro
   const hasWidthClass = /\b(w-\d+|w-\[.*?\]|w-auto|w-full|w-screen|w-min|w-max|w-fit|size-\d+|size-\[.*?\])\b/.test(finalClass);
 
   if (customSvg) {
+    const isBrandOrSolid = name.includes('facebook') || name.includes('instagram') || name.includes('twitter') || name.includes('google') || name.includes('whatsapp') || name.includes('logo') || name.includes('solid') || name.includes('brand');
+
     return (
       <span 
         className={`custom-icon-container-${cleanName} inline-flex shrink-0 items-center justify-center ${hasWidthClass ? '' : 'w-[1em] h-[1em]'} ${finalClass}`}
         {...props}
       >
         <style dangerouslySetInnerHTML={{ __html: `
-          .custom-icon-container-${cleanName} svg, 
-          .custom-icon-container-${cleanName} path, 
-          .custom-icon-container-${cleanName} rect, 
-          .custom-icon-container-${cleanName} circle, 
-          .custom-icon-container-${cleanName} polygon, 
-          .custom-icon-container-${cleanName} ellipse, 
-          .custom-icon-container-${cleanName} polyline, 
-          .custom-icon-container-${cleanName} line {
-            fill: ${solid ? 'rgba(28, 219, 94, 0.15) !important' : 'none !important'};
-            fill-opacity: ${solid ? '1 !important' : '0 !important'};
-            stroke: ${solid ? '#1cdb5e !important' : 'currentColor !important'};
-            stroke-width: ${solid ? '2.5px !important' : '2px !important'};
+          .custom-icon-container-${cleanName} svg * {
+            fill: ${isBrandOrSolid ? 'currentColor !important' : (solid ? 'rgba(28, 219, 94, 0.15) !important' : 'none !important')};
+            fill-opacity: ${isBrandOrSolid ? '1 !important' : (solid ? '1 !important' : '0 !important')};
+            stroke: ${isBrandOrSolid ? 'none !important' : 'currentColor !important'};
+            stroke-width: ${isBrandOrSolid ? '0 !important' : (solid ? '2.5px !important' : '2px !important')};
             transition: fill 0.3s ease, fill-opacity 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease;
           }
         `}} />

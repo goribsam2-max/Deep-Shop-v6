@@ -29,6 +29,11 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "clock", name: "Clock / Time", description: "Pending status, timing, and scheduled tasks", category: "navigation" },
   { key: "spinner", name: "Loading Spinner", description: "Spinning loader for network queries", category: "navigation" },
   { key: "sync-alt", name: "Refresh / Sync", description: "Data reload, synchronize, and swap currencies", category: "navigation" },
+  { key: "help-circle", name: "Help & FAQ", description: "Help circle inside headers and dialog overlays", category: "navigation" },
+  { key: "info", name: "Info Indicator", description: "Information banner details", category: "navigation" },
+  { key: "info-circle", name: "Info Circle Badge", description: "Information popups and status guidelines", category: "navigation" },
+  { key: "plus", name: "Plus Sign", description: "Generic add / increase quantity buttons", category: "navigation" },
+  { key: "minus", name: "Minus Sign", description: "Generic remove / decrease quantity buttons", category: "navigation" },
 
   // Profile & User Management
   { key: "user", name: "User Account Profile", description: "Bottom profiles tab and user accounts panel", category: "profile" },
@@ -40,6 +45,7 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "crown", name: "VIP Crown", description: "Admin indicator and premium subscribers", category: "profile" },
   { key: "shield-check", name: "Verified Account", description: "Trust indicators, verified users & sellers", category: "profile" },
   { key: "sign-out-alt", name: "Sign Out", description: "Logout button inside navigation drawers", category: "profile" },
+  { key: "log-out", name: "Log Out Account", description: "System exit session triggers on headers and sliders", category: "profile" },
   { key: "lock", name: "Password Security", description: "Login credentials fields and restricted locks", category: "profile" },
   { key: "unlock", name: "Access Unlocked", description: "Passwords matched or unrestricted access", category: "profile" },
   { key: "profile-order-pay", name: "Profile: To Pay Status", description: "Icon for 'To Pay' state in orders summary", category: "profile" },
@@ -73,7 +79,12 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "coins", name: "Coins Balance", description: "Cashback, reward tokens, affiliate commissions", category: "commerce" },
   { key: "receipt", name: "Order Receipt", description: "Bills, transaction invoice summaries", category: "commerce" },
   { key: "truck", name: "Shipping Truck", description: "Standard deliveries and transit indicators", category: "commerce" },
+  { key: "truck-fast", name: "Express Delivery", description: "Priority / immediate transit details", category: "commerce" },
   { key: "map-marker", name: "Location Pin", description: "Shipping address fields, GPS trackers", category: "commerce" },
+  { key: "shield-alt", name: "Protection Shield", description: "Extended protection, secure guarantee warranties", category: "commerce" },
+  { key: "undo", name: "Return / Undo", description: "Refund or easy replacement guarantee badges", category: "commerce" },
+  { key: "check-circle", name: "Verified Buyer Badge", description: "Verified customer reviews and feedback loops", category: "commerce" },
+  { key: "share-alt", name: "Product Share", description: "Product link export and recommendation share sheet", category: "commerce" },
 
   // Dashboard & Analytics
   { key: "chart-line", name: "Dashboard Analytics", description: "Stats graph, charts, and financial reports", category: "dashboard" },
@@ -83,6 +94,11 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "cog", name: "System Settings", description: "Admin and vendor profile configuration parameters", category: "dashboard" },
   { key: "copy", name: "Copy Link", description: "Referral links and promo code copy buttons", category: "dashboard" },
   { key: "rocket", name: "Affiliate Campaign Launch", description: "Campaign boosts, launches, and affiliate stats", category: "dashboard" },
+  { key: "bar-chart", name: "Analytics Bar Chart", description: "Category sales and performance histogram charts", category: "dashboard" },
+  { key: "layout", name: "Interactive Layout/Grid", description: "Category management and visual structure settings", category: "dashboard" },
+  { key: "store", name: "Seller Store Profiles", description: "Store pages and seller detail setups", category: "dashboard" },
+  { key: "list-plus", name: "Bulk Import", description: "Adding multiple listings or inventories", category: "dashboard" },
+  { key: "loader-2", name: "Process Spinner", description: "Loading/rendering indicator inside analytics", category: "dashboard" },
 
   // Communication & Chat
   { key: "envelope", name: "Direct Message / Email", description: "Support inbox, general messaging, emails", category: "chat" },
@@ -95,6 +111,34 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "bell", name: "Notifications Alerts", description: "System notifications, status bells, update alarms", category: "chat" },
   { key: "bell-slash", name: "Mute Alerts", description: "Disable announcements or alerts", category: "chat" },
   { key: "bullhorn", name: "Broadcast Announcement", description: "Marketing push alerts, admin banners", category: "chat" },
+  { key: "phone", name: "Audio Call Action", description: "Voice call buttons inside messenger and helpdesks", category: "chat" },
+  { key: "phone-off", name: "End Voice Call", description: "Disconnect ongoing calls indicator", category: "chat" },
+  { key: "video-off", name: "Stop Video Feed", description: "Video camera feed muted / disabled banner", category: "chat" },
+  { key: "paperclip", name: "File Clipper Attachment", description: "Add media, image files or invoices to chats", category: "chat" },
+  { key: "send", name: "Publish Chat", description: "Standard paperplane button for message post", category: "chat" },
+  { key: "check-double", name: "Message Read Status", description: "Double-check read confirmations", category: "chat" },
+  { key: "alert-circle", name: "Warning Callout", description: "Call warning and moderator flag alerts", category: "chat" },
+  { key: "message-square-share", name: "Forward Conversation", description: "Share dialogue thread to channels", category: "chat" },
+  { key: "message-square", name: "General Chat Threads", description: "Standard text message feed indicator", category: "chat" },
+  { key: "sparkles", name: "AI Assistant Logo", description: "AI help desk or smart auto-responders", category: "chat" },
+  { key: "pin", name: "Pin Conversation", description: "Anchor dialogue to channel priority feed", category: "chat" },
+  { key: "pin-off", name: "Unpin Dialog", description: "Release dialog from pinned position", category: "chat" },
+  { key: "volume-mute", name: "Muted Line", description: "Sound disabled icon for conversations", category: "chat" },
+  { key: "volume-x", name: "Disable Speaker Sound", description: "General muting speaker toggle", category: "chat" },
+  { key: "forward", name: "Redirect Message", description: "Arrow forwarding chats across contacts", category: "chat" },
+  { key: "more-vertical", name: "More Options Vertical", description: "Vertical three dots settings inside messages", category: "chat" },
+  { key: "user-plus", name: "Enroll Subscriber", description: "Add new member to the chat community", category: "chat" },
+  { key: "user-minus", name: "Unsubscribe Member", description: "Remove member from the community", category: "chat" },
+  { key: "user-x", name: "Ban Account", description: "Banish account from active messaging systems", category: "chat" },
+  { key: "radio", name: "Broadcast Signal", description: "Live streaming audio/video signal towers", category: "chat" },
+  { key: "minimize-2", name: "Collapse Window", description: "Minimize screen window for live overlays", category: "chat" },
+  { key: "maximize-2", name: "Expand Window", description: "Enlarge full screen layouts", category: "chat" },
+  { key: "hash", name: "Channel Prefix Tag", description: "Identify text/media channels inside chats", category: "chat" },
+  { key: "volume-2", name: "Speaker Volume On", description: "Audible talk streams active indicators", category: "chat" },
+  { key: "mic", name: "Audio Transmission Mic", description: "Active sound wave capture indicator", category: "chat" },
+  { key: "mic-off", name: "Microphone Silent State", description: "Muted sound feed inside helpdesk calls", category: "chat" },
+  { key: "shield", name: "Group Rules Protection", description: "Group moderator settings rules", category: "chat" },
+  { key: "activity", name: "Channel Sync Tracker", description: "System performance or network sync status", category: "chat" },
 
   // Social & Platform Utilities
   { key: "facebook", name: "Facebook Link", description: "Social links, customer sync options", category: "social" },
@@ -110,7 +154,6 @@ const PREDEFINED_ICONS: IconConfig[] = [
   { key: "edit", name: "Edit Pen", description: "Modify fields, update profiles and listings", category: "social" },
   { key: "save", name: "Save Controls", description: "Save form inputs, submit system values", category: "social" },
   { key: "ban", name: "Banish / Block User", description: "Suspend account, ban sellers, fraud restrictions", category: "social" },
-  { key: "share-alt", name: "Share Panel", description: "Refer product links, social sharing", category: "social" },
 ];
 
 const ManageIcons: React.FC = () => {

@@ -11,16 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  User,
-  LayoutDashboard,
-  LogOut,
-  ChevronDown,
-  ShoppingBag,
-  Bell,
-  Heart,
-  Check,
-} from "lucide-react";
+import Icon from "../Icon";
 import { auth } from "@/firebase";
 import { signOut, User as FirebaseUser } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +76,7 @@ export default function AccountMenu({
               "rounded-full flex items-center justify-center shrink-0 shadow-sm",
               isPill ? "w-8 h-8 md:w-7 md:h-7 bg-white" : "w-8 h-8 md:w-7 md:h-7 bg-zinc-100 dark:bg-zinc-800"
             )}>
-              <User className={cn(
+              <Icon name="user" className={cn(
                 "w-4 h-4 md:w-3.5 md:h-3.5",
                 isPill ? "text-zinc-900" : "text-zinc-900 dark:text-zinc-100"
               )} />
@@ -95,7 +86,7 @@ export default function AccountMenu({
           <span className="hidden md:inline-block max-w-[80px] lg:max-w-[120px] truncate text-sm">
             {user ? displayName : "Sign in"}
           </span>
-          <ChevronDown className="hidden md:block w-4 h-4 opacity-50 shrink-0" />
+          <Icon name="chevron-down" className="hidden md:block w-4 h-4 opacity-50 shrink-0" />
         </Button>
       </DropdownMenuTrigger>
 
@@ -131,7 +122,7 @@ export default function AccountMenu({
               }}
               className="flex items-center gap-2 rounded-lg py-2 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
-              <User className="w-4 h-4" />
+              <Icon name="user" className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               <span className="flex-1">Profile</span>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -141,7 +132,7 @@ export default function AccountMenu({
               }}
               className="flex items-center gap-2 rounded-lg py-2 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
-              <ShoppingBag className="w-4 h-4" />
+              <Icon name="shopping-bag" className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               <span className="flex-1">My Orders</span>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -151,7 +142,7 @@ export default function AccountMenu({
               }}
               className="flex items-center gap-2 rounded-lg py-2 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
-              <Heart className="w-4 h-4" />
+              <Icon name="heart" className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               <span className="flex-1">Wishlist</span>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -161,7 +152,7 @@ export default function AccountMenu({
               }}
               className="flex items-center gap-2 rounded-lg py-2 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
-              <Bell className="w-4 h-4" />
+              <Icon name="bell" className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               <span className="flex-1">Notifications</span>
             </DropdownMenuItem>
 
@@ -174,7 +165,7 @@ export default function AccountMenu({
               }}
               className="flex items-center gap-2 py-2 px-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600 dark:text-red-400 cursor-pointer"
             >
-              <LogOut className="w-4 h-4" />
+              <Icon name="logout" className="w-4 h-4" />
               <span className="flex-1 font-medium">Log out</span>
             </DropdownMenuItem>
           </>

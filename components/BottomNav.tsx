@@ -61,7 +61,7 @@ const BottomNav: React.FC = () => {
                 <div className="relative flex items-center justify-center">
                   <Icon
                     name={link.iconKey}
-                    className={`w-5 h-5 mb-1 transition-all duration-300 ${isActive ? "text-[#1cdb5e] scale-110" : "text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300"}`}
+                    className={`w-5 h-5 mb-1 transition-all duration-300 ${isActive ? "text-[#1cdb5e] scale-110" : "inactive-nav-icon text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300"}`}
                     solid={isActive}
                   />
                   {link.to === "/cart" && cartCount > 0 && (

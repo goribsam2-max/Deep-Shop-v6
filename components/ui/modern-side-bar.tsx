@@ -27,12 +27,13 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
+import Icon from '../Icon';
 
 import { StaffContext } from '../AdminLayout';
 export interface NavigationItem {
   id: string;
   name: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: any;
   href: string;
   badge?: string | number;
   moduleId?: string;
@@ -53,21 +54,21 @@ export function Sidebar({ className = "", children, userData }: SidebarProps) {
       const { isStaff, permissions, isSuperAdmin } = React.useContext(StaffContext);
       
       const ALL_NAVIGATION_ITEMS: NavigationItem[] = [
-        { id: "dashboard", name: "Dashboard", icon: Home, href: "/admin", moduleId: "dashboard" },
-        { id: "products", name: "Products", icon: ShoppingBag, href: "/admin/products", moduleId: "products" },
-        { id: "orders", name: "Orders", icon: ListOrdered, href: "/admin/orders", moduleId: "orders" },
-        { id: "users", name: "Users & Staff", icon: Users, href: "/admin/users", moduleId: "users" },
-        { id: "riders", name: "Delivery Riders", icon: Bike, href: "/admin/riders", moduleId: "riders" },
-        { id: "withdrawals", name: "Withdrawals", icon: DollarSign, href: "/admin/withdrawals", moduleId: "withdrawals" },
-        { id: "reviews", name: "Reviews", icon: Star, href: "/admin/reviews", moduleId: "reviews" },
-        { id: "banners", name: "Banners", icon: Image, href: "/admin/banners", moduleId: "banners" },
-        { id: "onboarding-offers", name: "Onboarding Offers", icon: Image, href: "/admin/onboarding-offers", moduleId: "onboarding-offers" },
-        { id: "stories", name: "Stories", icon: Layout, href: "/admin/stories", moduleId: "stories" },
-        { id: "custom-sections", name: "UI builder", icon: FileText, href: "/admin/custom-sections", moduleId: "custom-sections" },
-        { id: "chats", name: "Live Chats", icon: MessageSquare, href: "/admin/chats", moduleId: "chats" },
-        { id: "helpdesk", name: "Help Desk", icon: MessageSquare, href: "/admin/helpdesk", moduleId: "helpdesk" },
-        { id: "notifications", name: "Notifications", icon: Bell, href: "/admin/notifications", moduleId: "notifications" },
-        { id: "config", name: "Config", icon: Settings, href: "/admin/config", moduleId: "config" },
+        { id: "dashboard", name: "Dashboard", icon: "home", href: "/admin", moduleId: "dashboard" },
+        { id: "products", name: "Products", icon: "shopping-bag", href: "/admin/products", moduleId: "products" },
+        { id: "orders", name: "Orders", icon: "profile-order-ship", href: "/admin/orders", moduleId: "orders" },
+        { id: "users", name: "Users & Staff", icon: "users", href: "/admin/users", moduleId: "users" },
+        { id: "riders", name: "Delivery Riders", icon: "truck", href: "/admin/riders", moduleId: "riders" },
+        { id: "withdrawals", name: "Withdrawals", icon: "coins", href: "/admin/withdrawals", moduleId: "withdrawals" },
+        { id: "reviews", name: "Reviews", icon: "star", href: "/admin/reviews", moduleId: "reviews" },
+        { id: "banners", name: "Banners", icon: "image", href: "/admin/banners", moduleId: "banners" },
+        { id: "onboarding-offers", name: "Onboarding Offers", icon: "gift", href: "/admin/onboarding-offers", moduleId: "onboarding-offers" },
+        { id: "stories", name: "Stories", icon: "layout", href: "/admin/stories", moduleId: "stories" },
+        { id: "custom-sections", name: "UI builder", icon: "cog", href: "/admin/custom-sections", moduleId: "custom-sections" },
+        { id: "chats", name: "Live Chats", icon: "comment-dots", href: "/admin/chats", moduleId: "chats" },
+        { id: "helpdesk", name: "Help Desk", icon: "headset", href: "/admin/helpdesk", moduleId: "helpdesk" },
+        { id: "notifications", name: "Notifications", icon: "bell", href: "/admin/notifications", moduleId: "notifications" },
+        { id: "config", name: "Config", icon: "cog", href: "/admin/config", moduleId: "config" },
       ];
 
       const navigationItems = React.useMemo(() => {
@@ -190,7 +191,7 @@ export function Sidebar({ className = "", children, userData }: SidebarProps) {
         <nav className="flex-1 px-2 py-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200">
           <ul className="space-y-0.5">
             {navigationItems.map((item) => {
-              const Icon = item.icon;
+              const SidebarIcon = item.icon;
               const isActive = location.pathname === item.href;
 
               return (
@@ -208,15 +209,28 @@ export function Sidebar({ className = "", children, userData }: SidebarProps) {
                     title={isCollapsed ? item.name : undefined}
                   >
                     <div className="flex items-center justify-center min-w-[20px]">
-                      <Icon
-                        className={`
-                          h-4 w-4 flex-shrink-0
-                          ${isActive 
-                            ? "text-black" 
-                            : "text-slate-500 group-hover:text-slate-700"
-                          }
-                        `}
-                      />
+                      {typeof SidebarIcon === 'string' ? (
+                        <Icon
+                          name={SidebarIcon}
+                          className={`
+                            h-4 w-4 flex-shrink-0
+                            ${isActive 
+                              ? "text-black" 
+                              : "text-slate-500 group-hover:text-slate-700"
+                            }
+                          `}
+                        />
+                      ) : (
+                        <SidebarIcon
+                          className={`
+                            h-4 w-4 flex-shrink-0
+                            ${isActive 
+                              ? "text-black" 
+                              : "text-slate-500 group-hover:text-slate-700"
+                            }
+                          `}
+                        />
+                      )}
                     </div>
                     
                     {!isCollapsed && (

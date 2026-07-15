@@ -649,7 +649,7 @@ const SellerDashboard: React.FC = () => {
           <div className="relative">
             <Icon 
               name={icon}
-              className={`w-5.5 h-5.5 mb-1 transition-all duration-300 ${isActive ? "text-[#EF8020] scale-110" : "text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-300"}`} 
+              className={`w-5.5 h-5.5 mb-1 transition-all duration-300 ${isActive ? "text-[#EF8020] scale-110" : "inactive-nav-icon text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-300"}`} 
               solid={isActive}
             />
             {badge !== undefined && badge > 0 && (
@@ -695,12 +695,12 @@ const SellerDashboard: React.FC = () => {
           </div>
         </div>
         <nav className="flex flex-col gap-2 flex-1">
-          <button onClick={() => { setActiveTab("home"); setSelectedOrderId(null); }} className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab === "home" ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800"}`}>
-            <LayoutDashboard className={`w-5 h-5 ${activeTab === "home" ? "text-[#EF8020]" : ""}`} /> Home
+          <button onClick={() => { setActiveTab("home"); setSelectedOrderId(null); }} className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab === "home" ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"}`}>
+            <Icon name="home" className={`w-5 h-5 ${activeTab === "home" ? "text-[#EF8020]" : "text-zinc-400 dark:text-zinc-500"}`} /> Home
           </button>
-          <button onClick={() => { setActiveTab("orders"); setSelectedOrderId(null); }} className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab === "orders" ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800"} w-full`}>
+          <button onClick={() => { setActiveTab("orders"); setSelectedOrderId(null); }} className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab === "orders" ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"} w-full`}>
             <div className="flex items-center gap-3">
-              <ClipboardList className={`w-5 h-5 ${activeTab === "orders" ? "text-[#EF8020]" : ""}`} />
+              <Icon name="receipt" className={`w-5 h-5 ${activeTab === "orders" ? "text-[#EF8020]" : "text-zinc-400 dark:text-zinc-500"}`} />
               <span>Orders</span>
             </div>
             {orders.filter(o => o.status === "pending").length > 0 && (
@@ -709,11 +709,11 @@ const SellerDashboard: React.FC = () => {
               </span>
             )}
           </button>
-          <button onClick={() => { setActiveTab("products"); setSelectedOrderId(null); }} className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab === "products" || activeTab === "add_product" || activeTab === "edit_product" ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800"}`}>
-            <Boxes className={`w-5 h-5 ${activeTab === "products" || activeTab === "add_product" || activeTab === "edit_product" ? "text-[#EF8020]" : ""}`} /> Products
+          <button onClick={() => { setActiveTab("products"); setSelectedOrderId(null); }} className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab === "products" || activeTab === "add_product" || activeTab === "edit_product" ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"}`}>
+            <Icon name="boxes" className={`w-5 h-5 ${activeTab === "products" || activeTab === "add_product" || activeTab === "edit_product" ? "text-[#EF8020]" : "text-zinc-400 dark:text-zinc-500"}`} /> Products
           </button>
-          <button onClick={() => { setActiveTab("settings_store"); setSelectedOrderId(null); }} className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab.startsWith("settings") ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800"}`}>
-            <Sliders className={`w-5 h-5 ${activeTab.startsWith("settings") ? "text-[#EF8020]" : ""}`} /> Settings
+          <button onClick={() => { setActiveTab("settings_store"); setSelectedOrderId(null); }} className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${activeTab.startsWith("settings") ? "bg-[#EF8020]/10 text-[#EF8020]" : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"}`}>
+            <Icon name="sliders-h" className={`w-5 h-5 ${activeTab.startsWith("settings") ? "text-[#EF8020]" : "text-zinc-400 dark:text-zinc-500"}`} /> Settings
           </button>
         </nav>
       </aside>

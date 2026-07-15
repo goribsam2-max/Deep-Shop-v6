@@ -58,91 +58,91 @@ const adminLinks: LinkItem[] = [
   {
     title: "Dashboard",
     href: "/admin",
-    icon: Home,
+    icon: "home",
     description: "Overview & Stats",
   },
   {
     title: "Products",
     href: "/admin/products",
-    icon: ShoppingBag,
+    icon: "shopping-bag",
     description: "Manage items",
   },
   {
     title: "Orders",
     href: "/admin/orders",
-    icon: ListOrdered,
+    icon: "profile-order-ship",
     description: "Track & update orders",
   },
   {
     title: "Users & Staff",
     href: "/admin/users",
-    icon: Users,
+    icon: "users",
     description: "Manage accounts",
   },
   {
     title: "Delivery Riders",
     href: "/admin/riders",
-    icon: Bike,
+    icon: "truck",
     description: "Rider assignments",
   },
   {
     title: "Withdrawals",
     href: "/admin/withdrawals",
-    icon: DollarSign,
+    icon: "coins",
     description: "Affiliate payouts",
   },
   {
     title: "Reviews",
     href: "/admin/reviews",
-    icon: Star,
+    icon: "star",
     description: "Customer feedback",
   },
   {
     title: "Banners",
     href: "/admin/banners",
-    icon: ImageIcon,
+    icon: "image",
     description: "Promo images",
   },
   {
     title: "Onboarding Offers",
     href: "/admin/onboarding-offers",
-    icon: ImageIcon,
+    icon: "gift",
     description: "Welcome screens",
   },
   {
     title: "Stories",
     href: "/admin/stories",
-    icon: Layout,
+    icon: "layout",
     description: "App stories/highlights",
   },
   {
     title: "UI Builder",
     href: "/admin/custom-sections",
-    icon: FileText,
+    icon: "cog",
     description: "Custom sections",
   },
   {
     title: "Live Chats",
     href: "/admin/chats",
-    icon: MessageSquare,
+    icon: "comment-dots",
     description: "Real-time support chats",
   },
   {
     title: "Help Desk",
     href: "/admin/helpdesk",
-    icon: MessageSquare,
+    icon: "headset",
     description: "Support tickets",
   },
   {
     title: "Notifications",
     href: "/admin/notifications",
-    icon: Bell,
+    icon: "bell",
     description: "Push alerts",
   },
   {
     title: "Config",
     href: "/admin/config",
-    icon: Settings,
+    icon: "cog",
     description: "App settings",
   },
 ];
@@ -152,43 +152,43 @@ const productLinks: LinkItem[] = [
     title: "Build Box",
     href: "/build-box",
     description: "Create your custom tech bundle",
-    icon: Box,
+    icon: "box",
   },
   {
     title: "Home",
     href: "/",
     description: "Discover new border cross phones & devices",
-    icon: Home,
+    icon: "home",
   },
   {
     title: "Catalog",
     href: "/all-products",
     description: "Browse our full collection",
-    icon: Box,
+    icon: "box",
   },
   {
     title: "Pay",
     href: "/payment-methods",
     description: "Secure payment options",
-    icon: DollarSign,
+    icon: "coins",
   },
   {
     title: "Receive",
     href: "/orders",
     description: "Track and manage your orders",
-    icon: ShoppingBag,
+    icon: "shopping-bag",
   },
   {
     title: "Ship",
     href: "/orders",
     description: "Shipping details and status",
-    icon: Bike,
+    icon: "truck",
   },
   {
     title: "Review",
     href: "/wishlist",
     description: "Your saved favorite items",
-    icon: Star,
+    icon: "heart",
   },
 ];
 
@@ -663,7 +663,11 @@ function ListItem({
       }
     >
       <div className="bg-zinc-100 dark:bg-zinc-800 flex aspect-square size-12 items-center justify-center rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-sm shrink-0">
-        <IconComp className="text-zinc-700 dark:text-zinc-300 size-5" />
+        {typeof IconComp === "string" ? (
+          <Icon name={IconComp} className="text-zinc-700 dark:text-zinc-300 size-5" />
+        ) : (
+          <IconComp className="text-zinc-700 dark:text-zinc-300 size-5" />
+        )}
       </div>
       <div className="flex flex-col items-start justify-center">
         <span className="font-semibold text-zinc-900 dark:text-zinc-100 text-sm">

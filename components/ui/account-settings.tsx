@@ -5,7 +5,7 @@ import { signOut, deleteUser, updateProfile } from 'firebase/auth';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useNotify, useConfirm } from '@/components/Notifications';
-import { Mail, User, Lock, Bell, Shield, Moon, LogOut, Trash2, ChevronRight, X, Phone } from 'lucide-react';
+import Icon from '../Icon';
 import { useTheme } from '@/components/ThemeContext';
 
 export function AccountSettings() {
@@ -98,67 +98,67 @@ export function AccountSettings() {
   };
 
   const handleUpdateContact = async () => {
-     if (!contactInputValue) return;
-     const user = auth.currentUser;
-     if (!user) return;
-     
-     const validationError = validateInput(contactInputValue, contactTypeToAdd);
-     if (validationError) {
-        return notify(validationError, "error");
-     }
+      if (!contactInputValue) return;
+      const user = auth.currentUser;
+      if (!user) return;
+      
+      const validationError = validateInput(contactInputValue, contactTypeToAdd);
+      if (validationError) {
+         return notify(validationError, "error");
+      }
 
-     if (contactTypeToAdd === 'email') {
-        try {
-           const res = await fetch('/api/lookup-auth-email', {
-              method: 'POST',
-              headers: {'Content-Type':'application/json'},
-              body: JSON.stringify({ identifier: contactInputValue })
-           });
-           const data = await res.json();
-           if (data.authEmail) {
-              return notify("This email is already in use by another account.", "error");
-           }
-        } catch(e){}
-        
-        try {
-           await updateDoc(doc(db, "users", user.uid), { secondaryEmail: contactInputValue });
-           setSecondaryEmail(contactInputValue);
-           setShowAddContact(false);
-           setContactInputValue('');
-           notify("Email added successfully", "success");
-        } catch(e) {
-           notify("Failed to add email", "error");
-        }
-     } else {
-        // phone
-        const clean = contactInputValue.replace(/[-.\s]/g, '');
-        let possiblePhone = clean;
-        if (!clean.startsWith('+')) {
-           possiblePhone = clean.startsWith('880') ? `+${clean}` : (clean.startsWith('01') ? `+880${clean.substring(1)}` : `+${clean}`);
-        }
-        
-        try {
-           const res = await fetch('/api/lookup-auth-email', {
-              method: 'POST',
-              headers: {'Content-Type':'application/json'},
-              body: JSON.stringify({ identifier: possiblePhone })
-           });
-           const data = await res.json();
-           if (data.authEmail) {
-              return notify("This phone number is already registered.", "error");
-           }
-        } catch(e){}
+      if (contactTypeToAdd === 'email') {
+         try {
+            const res = await fetch('/api/lookup-auth-email', {
+               method: 'POST',
+               headers: {'Content-Type':'application/json'},
+               body: JSON.stringify({ identifier: contactInputValue })
+            });
+            const data = await res.json();
+            if (data.authEmail) {
+               return notify("This email is already in use by another account.", "error");
+            }
+         } catch(e){}
+         
+         try {
+            await updateDoc(doc(db, "users", user.uid), { secondaryEmail: contactInputValue });
+            setSecondaryEmail(contactInputValue);
+            setShowAddContact(false);
+            setContactInputValue('');
+            notify("Email added successfully", "success");
+         } catch(e) {
+            notify("Failed to add email", "error");
+         }
+      } else {
+         // phone
+         const clean = contactInputValue.replace(/[-.\s]/g, '');
+         let possiblePhone = clean;
+         if (!clean.startsWith('+')) {
+            possiblePhone = clean.startsWith('880') ? `+${clean}` : (clean.startsWith('01') ? `+880${clean.substring(1)}` : `+${clean}`);
+         }
+         
+         try {
+            const res = await fetch('/api/lookup-auth-email', {
+               method: 'POST',
+               headers: {'Content-Type':'application/json'},
+               body: JSON.stringify({ identifier: possiblePhone })
+            });
+            const data = await res.json();
+            if (data.authEmail) {
+               return notify("This phone number is already registered.", "error");
+            }
+         } catch(e){}
 
-        try {
-           await updateDoc(doc(db, "users", user.uid), { phoneNumber: possiblePhone });
-           setPhoneNumber(possiblePhone);
-           setShowAddContact(false);
-           setContactInputValue('');
-           notify("Phone added successfully", "success");
-        } catch(e) {
-           notify("Failed to add phone", "error");
-        }
-     }
+         try {
+            await updateDoc(doc(db, "users", user.uid), { phoneNumber: possiblePhone });
+            setPhoneNumber(possiblePhone);
+            setShowAddContact(false);
+            setContactInputValue('');
+            notify("Phone added successfully", "success");
+         } catch(e) {
+            notify("Failed to add phone", "error");
+         }
+      }
   };
 
   const handleUpdateName = async () => {
@@ -203,6 +203,9 @@ export function AccountSettings() {
   };
 
   const handleLogout = async () => {
+    await signOut(auth);
+    localStorage.removeItem("f_cart");
+    navigate("/");
     window.dispatchEvent(new CustomEvent('openAccountCenter'));
   };
 
@@ -244,7 +247,7 @@ export function AccountSettings() {
         <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
            <div className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative">
               <button onClick={() => setShowEditName(false)} className="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full">
-                 <X className="w-5 h-5 text-zinc-500" />
+                 <Icon name="close" className="w-5 h-5 text-zinc-500" />
               </button>
               <h3 className="text-xl font-bold mb-4">Edit Username</h3>
               <input 
@@ -270,7 +273,7 @@ export function AccountSettings() {
         <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
            <div className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative">
               <button onClick={() => setShowAddContact(false)} className="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full">
-                 <X className="w-5 h-5 text-zinc-500" />
+                 <Icon name="close" className="w-5 h-5 text-zinc-500" />
               </button>
               <h3 className="text-xl font-bold mb-4">Add {contactTypeToAdd === 'email' ? 'Email' : 'Phone'}</h3>
               <input 
@@ -306,9 +309,9 @@ export function AccountSettings() {
         <div className="bg-white dark:bg-zinc-900 rounded-[28px] overflow-hidden shadow-sm p-2">
             {isPhoneAccount ? (
                <>
-                 <SettingItem icon={<User className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Phone Number" subLabel={"+" + email.split("@")[0]} onClick={() => {}} />
+                 <SettingItem icon="phone" label="Phone Number" subLabel={"+" + email.split("@")[0]} onClick={() => {}} />
                  <SettingItem 
-                    icon={<Mail className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} 
+                    icon="mail" 
                     label="Email" 
                     subLabel={secondaryEmail || "Not set. Add an email to login."} 
                     onClick={() => { if (!secondaryEmail) { setContactTypeToAdd('email'); setContactInputValue(''); setShowAddContact(true); } }} 
@@ -316,20 +319,20 @@ export function AccountSettings() {
                </>
             ) : (
                <>
-                 <SettingItem icon={<Mail className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Email" subLabel={email} onClick={() => {}} />
+                 <SettingItem icon="mail" label="Email" subLabel={email} onClick={() => {}} />
                  <SettingItem 
-                    icon={<User className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} 
+                    icon="phone" 
                     label="Phone Number" 
                     subLabel={phoneNumber || "Not set. Add a phone number."} 
                     onClick={() => { if (!phoneNumber) { setContactTypeToAdd('phone'); setContactInputValue(''); setShowAddContact(true); } }} 
                  />
                </>
             )}
-            <SettingItem icon={<User className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Name" subLabel={name} onClick={() => { setEditNameValue(name); setShowEditName(true); }} />
-            <SettingItem icon={<User className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Username" subLabel={username ? `@${username}` : "Not set"} onClick={() => navigate('/profile/edit')} />
-            <SettingItem icon={<Lock className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Password" onClick={() => navigate('/settings/password')} />
-            <SettingItem icon={<Bell className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Notifications" onClick={togglePush} rightElement={<Switch isChecked={pushEnabled} />} />
-            <SettingItem icon={<Shield className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Privacy Policy" onClick={() => navigate('/privacy')} isLast />
+            <SettingItem icon="user" label="Name" subLabel={name} onClick={() => { setEditNameValue(name); setShowEditName(true); }} />
+            <SettingItem icon="user" label="Username" subLabel={username ? `@${username}` : "Not set"} onClick={() => navigate('/profile/edit')} />
+            <SettingItem icon="lock" label="Password" onClick={() => navigate('/settings/password')} />
+            <SettingItem icon="bell" label="Notifications" onClick={togglePush} rightElement={<Switch isChecked={pushEnabled} />} />
+            <SettingItem icon="shield" label="Privacy Policy" onClick={() => navigate('/privacy')} isLast />
         </div>
            );
         })()}
@@ -338,21 +341,21 @@ export function AccountSettings() {
         <div className="bg-white dark:bg-zinc-900 rounded-[28px] overflow-hidden shadow-sm p-2">
             <h3 className="text-xs font-extrabold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 px-4 py-2 mt-2 mb-1">Privacy & Safety</h3>
             <SettingItem 
-               icon={<Shield className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} 
+               icon="shield" 
                label="Hide Email" 
                subLabel="Hide email address from other users" 
                onClick={handleToggleHideEmail} 
                rightElement={<Switch isChecked={hideEmail} />} 
             />
             <SettingItem 
-               icon={<Phone className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} 
+               icon="phone" 
                label="Hide Phone Number" 
                subLabel="Hide phone number from other users" 
                onClick={handleToggleHidePhone} 
                rightElement={<Switch isChecked={hidePhone} />} 
             />
             <SettingItem 
-               icon={<Lock className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} 
+               icon="lock" 
                label="Disable Calls" 
                subLabel="Block incoming voice & video calls" 
                onClick={handleToggleDisableCalls} 
@@ -363,9 +366,9 @@ export function AccountSettings() {
 
         {/* Preferences */}
         <div className="bg-white dark:bg-zinc-900 rounded-[28px] overflow-hidden shadow-sm p-2">
-            <SettingItem icon={<Moon className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Dark Mode" onClick={toggleTheme} rightElement={<Switch isChecked={isDark} />} />
-            <SettingItem icon={<LogOut className="w-5 h-5 text-zinc-500" strokeWidth={2}/>} label="Log Out" onClick={handleLogout} />
-            <SettingItem icon={<Trash2 className="w-5 h-5 text-red-500" strokeWidth={2}/>} label="Delete Account" onClick={handleDeleteAccount} isLast textColor="text-red-500" />
+            <SettingItem icon="moon" label="Dark Mode" onClick={toggleTheme} rightElement={<Switch isChecked={isDark} />} />
+            <SettingItem icon="logout" label="Log Out" onClick={handleLogout} />
+            <SettingItem icon="trash" label="Delete Account" onClick={handleDeleteAccount} isLast textColor="text-red-500" />
         </div>
 
       </div>
@@ -373,7 +376,7 @@ export function AccountSettings() {
 	);
 }
 
-function SettingItem({ icon, label, subLabel, onClick, isLast = false, rightElement, textColor }: { icon: React.ReactNode, label: string, subLabel?: string, onClick: (e?: React.MouseEvent) => void, isLast?: boolean, rightElement?: React.ReactNode, textColor?: string }) {
+function SettingItem({ icon, label, subLabel, onClick, isLast = false, rightElement, textColor }: { icon: React.ReactNode | string, label: string, subLabel?: string, onClick: (e?: React.MouseEvent) => void, isLast?: boolean, rightElement?: React.ReactNode, textColor?: string }) {
     return (
         <div 
             onClick={onClick}
@@ -383,13 +386,17 @@ function SettingItem({ icon, label, subLabel, onClick, isLast = false, rightElem
             )}
         >
             <div className="flex items-center space-x-4">
-                {icon}
+                {typeof icon === 'string' ? (
+                  <Icon name={icon} className="w-5 h-5 text-zinc-500" />
+                ) : (
+                  icon
+                )}
                 <div className="flex flex-col">
                   <span className={cn("font-medium text-[15px]", textColor || "text-zinc-800 dark:text-zinc-200")}>{label}</span>
                   {subLabel && <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">{subLabel}</span>}
                 </div>
             </div>
-            {rightElement || <ChevronRight className="w-5 h-5 text-zinc-400" strokeWidth={2} />}
+            {rightElement || <Icon name="chevron-right" className="w-5 h-5 text-zinc-400" />}
         </div>
     )
 }
@@ -407,4 +414,3 @@ function Switch({ isChecked }: { isChecked: boolean }) {
         </div>
     )
 }
-
